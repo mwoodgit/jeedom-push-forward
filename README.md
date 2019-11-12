@@ -42,7 +42,7 @@ The push URL will be something like `http://localhost:8080/forward.php?...`
 
 More informations on the Push URL : https://jeedom.github.io/core/fr_FR/administration#tocAnchor-1-9-2
 
-## Parameters
+## Settings
 
 Use must update the `forward.php` file to complete the `[PUT_YOUR_API_URL_HERE]` and if the script must call it in `GET` or `POST`.
 
@@ -54,6 +54,19 @@ define('API_URL', '[PUT_YOUR_API_URL_HERE]');
 // Must be POST or GET
 define('API_METHOD', 'POST');
 ```
+
+You can add an HASMAC verification for you API.
+In that case your API will need to share a `secret` with this script and you will have to set it in `API_TOKEN` constant.
+
+If you complete this constant the script will add two headers with each request :
+1. X-Request-Timestamp, with the current timestamp (Will allow the API to prevent request replay).
+2. X-Request-Sign, which will allow the API to validate the request.
+
+The signature is an hmac token, created from the string `auth:[TIMESTAMP]:[URL]` crypted with `API_TOKEN`.
+
+## Debug
+
+If you set a `&debug=1` parameter in your URL, the script will log debug informations for the request.
 
 # Last info
 
